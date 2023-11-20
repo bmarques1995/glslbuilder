@@ -7,6 +7,6 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,Release>:EditAndContinue>,$<$<CONFIG:Debug,Release>:ProgramDatabase>>")
 endif()
 
-#add_subdirectory(hlslbuilder)
+add_subdirectory(hlslbuilder)
 add_subdirectory(hlslbuilder_exec)
 #add_subdirectory(hlslbuilder_tests)

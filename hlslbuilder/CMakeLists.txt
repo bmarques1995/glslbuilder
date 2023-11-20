@@ -14,11 +14,11 @@ set(LIB_POSTFIX d)
 
 set(LIB_NAME ${CMAKE_PROJECT_NAME})
 add_library(${LIB_NAME} SHARED ${SM_HDRS} ${SM_SRCS} )
-target_precompile_headers(${LIB_NAME} PRIVATE ./include/private/smpch.hh)
+#target_precompile_headers(${LIB_NAME} PRIVATE ./include/private/hlslbpch.hh)
 target_include_directories(${LIB_NAME} PUBLIC "${CMAKE_PREFIX_PATH}/include" $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/HLSLBuilder> $<INSTALL_INTERFACE:${CMAKE_PREFIX_PATH}/include>)
 target_include_directories(${LIB_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include/private")
 target_link_directories(${LIB_NAME} PUBLIC "${CMAKE_PREFIX_PATH}/lib")
-target_link_libraries(${LIB_NAME} PUBLIC jsoncpp_lib spdlog::spdlog dxcompiler)
+target_link_libraries(${LIB_NAME} PUBLIC jsoncpp_lib dxcompiler)
 if(WIN32)
     target_link_libraries(${LIB_NAME} PUBLIC d3dcompiler)
 endif()
@@ -40,11 +40,11 @@ set_target_properties(${LIB_NAME} PROPERTIES DEBUG_POSTFIX ${LIB_POSTFIX})
 
 set(LIB_NAME ${CMAKE_PROJECT_NAME}_static)
 add_library(${LIB_NAME} STATIC ${SM_HDRS} ${SM_SRCS})
-target_precompile_headers(${LIB_NAME} PRIVATE ./include/private/smpch.hh)
+#target_precompile_headers(${LIB_NAME} PRIVATE ./include/private/hlslbpch.hh)
 target_include_directories(${LIB_NAME} PUBLIC "${CMAKE_PREFIX_PATH}/include" $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/hlslbuilder> $<INSTALL_INTERFACE:${CMAKE_PREFIX_PATH}/include>)
 target_include_directories(${LIB_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include/private")
 target_link_directories(${LIB_NAME} PUBLIC "${CMAKE_PREFIX_PATH}/lib")
-target_link_libraries(${LIB_NAME} PUBLIC jsoncpp_static spdlog::spdlog dxcompiler)
+target_link_libraries(${LIB_NAME} PUBLIC jsoncpp_static dxcompiler)
 if(WIN32)
     target_link_libraries(${LIB_NAME} PUBLIC d3dcompiler)
 endif()
@@ -64,9 +64,9 @@ set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17)
 set_target_properties(${LIB_NAME} PROPERTIES DEBUG_POSTFIX ${LIB_POSTFIX})
 
 
-file(READ ${CMAKE_CURRENT_SOURCE_DIR}/include/hlslbuilder/HLSLBuilderVersion.hh.in HEADER_CONTENTS)
-string(REGEX REPLACE "CMAKE_VERSION" "${CMAKE_PROJECT_VERSION}" OUTPUT_HEADER ${HEADER_CONTENTS})
-file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/include/hlslbuilder/HLSLBuilderVersion.hh ${OUTPUT_HEADER})
+#file(READ ${CMAKE_CURRENT_SOURCE_DIR}/include/hlslbuilder/HLSLBuilderVersion.hh.in HEADER_CONTENTS)
+#string(REGEX REPLACE "CMAKE_VERSION" "${CMAKE_PROJECT_VERSION}" OUTPUT_HEADER ${HEADER_CONTENTS})
+#file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/include/hlslbuilder/HLSLBuilderVersion.hh ${OUTPUT_HEADER})
 
 set(HLSL_BUILDER_GENERATED_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
 set(HLSL_BUILDER_VERSION_CONFIG "${HLSL_BUILDER_GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
@@ -92,7 +92,7 @@ install(
     NAMESPACE "${HLSL_BUILDER_NAMESPACE}"
     DESTINATION "${HLSL_BUILDER_CONFIG_INSTALL_DIR}")
 
-install(TARGETS ${CMAKE_PROJECT_NAME}_dynamic ${CMAKE_PROJECT_NAME}_static
+install(TARGETS ${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME}_static
         EXPORT ${HLSL_BUILDER_TARGETS_EXPORT_NAME}
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
