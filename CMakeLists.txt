@@ -9,4 +9,4 @@ endif()
 
 add_subdirectory(hlslbuilder)
 add_subdirectory(hlslbuilder_exec)
-#add_subdirectory(hlslbuilder_tests)
+add_subdirectory(hlslbuilder_tests)
