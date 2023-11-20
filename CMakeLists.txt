@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(hlslbuilder VERSION 0.0.1)
+project(hlslbuilder VERSION 0.1.0)
 
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
