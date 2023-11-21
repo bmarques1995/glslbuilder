@@ -38,6 +38,11 @@ const Json::Value* HLSLBuilder::SolutionParser::GetSolution()
 	return &s_HLS2Solution;
 }
 
+void HLSLBuilder::SolutionParser::Clear()
+{
+	s_HLS2Solution.clear();
+}
+
 void HLSLBuilder::SolutionParser::ValidateJSONProperties()
 {
 	for (auto it = s_ValidProperties.begin(); it != s_ValidProperties.end(); it++)

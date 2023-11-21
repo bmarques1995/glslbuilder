@@ -1,0 +1,12 @@
+{
+  "GraphicsPipelineSources": [
+    "./error.hlsl",
+    "./texture.hlsl"
+  ],
+  "GraphicsPipeline": {
+    "VertexEntry": "vs_main",
+    "PixelEntry": "ps_main"
+  },
+  "VulkanVersion" : "1.3",
+  "HLSLVersion":  "5.0"
+}

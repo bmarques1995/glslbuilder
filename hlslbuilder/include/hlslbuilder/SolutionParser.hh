@@ -26,6 +26,8 @@ namespace HLSLBuilder
 		* GetSolution returns the current HLS2 instance.
 		*/
 		static const Json::Value* GetSolution();
+
+		static void Clear();
 	private:
 		static void ValidateJSONProperties();
 		static void ValidateProperty(std::pair<std::string, HLSLBuilder::PropertyType> property);
