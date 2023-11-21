@@ -4,6 +4,8 @@
 #include "ArgListCommons.hh"
 #include "ArgParser.hh"
 #include "ArgParserCommons.hh"
+#include "SolutionParser.hh"
+#include "SolutionParserCommons.hh"
 #include "HLSLBuilderAPI.hh"
 #include "HLSLBuilderVersion.hh"
 #include "CommonExceptions.hh"

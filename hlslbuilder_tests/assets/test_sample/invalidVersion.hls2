@@ -1,0 +1,15 @@
+{
+  "GraphicsPipelineSources": [
+    "./test.hlsl",
+    "./texture.hlsl"
+  ],
+  "GraphicsPipeline": {
+    "VertexEntry": "vs_main",
+    "PixelEntry": "ps_main",
+    "GeometryEntry": "gs_main",
+    "DomainEntry": "ds_main",
+    "HullEntry":  "hs_main"
+  },
+  "VulkanVersion": "1",
+  "HLSLVersion":  "6.0"
+}
