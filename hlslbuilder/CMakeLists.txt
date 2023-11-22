@@ -6,9 +6,11 @@ file(GLOB_RECURSE SM_SRCS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "./lib/*.cc")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_PREFIX_PATH})
 
 find_package(JsonCpp REQUIRED)
-find_package(spdlog REQUIRED)
 
-find_library(NAMES HLSL TARGET d3dcompiler dxcompiler REQUIRED)
+find_library(NAMES HLSL TARGET dxcompiler REQUIRED)
+if(WIN32)
+    find_library(NAMES HLSL_WIN TARGET d3dcompiler REQUIRED)
+endif()
 
 set(LIB_POSTFIX d)
 

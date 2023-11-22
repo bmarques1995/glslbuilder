@@ -7,6 +7,7 @@
 #include "HLSLBuilderAPI.hh"
 #include "ArgParser.hh"
 #include "BuilderCommons.hh"
+#include <functional>
 
 namespace HLSLBuilder
 {
@@ -17,6 +18,8 @@ namespace HLSLBuilder
 		static void BuildSources();
 
 		static void Clear();
+		static void SetCallback(std::function<void(std::string)> callback);
+		static void SendBuildMessage(const Source& source);
 	private:
 
 		static void ValidateHLSLVersion();
@@ -28,6 +31,7 @@ namespace HLSLBuilder
 		static std::list<GraphicsSource> s_GraphicsSources;
 		static Version s_HLSLVersion;
 		static Version s_VulkanVersion;
+		static std::function<void(std::string)> s_Callback;
 
 		static Json::Value s_Output;
 	};

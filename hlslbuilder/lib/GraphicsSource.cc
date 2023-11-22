@@ -12,7 +12,8 @@ const std::unordered_map<HLSLBuilder::ShaderStage, std::string_view> HLSLBuilder
 	{ ShaderStage::Pixel, "PixelFile" }
 };
 
-HLSLBuilder::GraphicsSource::GraphicsSource(std::string_view path)
+HLSLBuilder::GraphicsSource::GraphicsSource(std::string_view path) :
+	m_Callback([](std::string value) {})
 {
 	FileHandler::ReadTextFile(path, &m_SourceCode);
 	std::filesystem::path pathName(path.data());
@@ -215,6 +216,7 @@ std::string HLSLBuilder::GraphicsSource::BuildVulkanVersion(Version vulkanVersio
 
 void HLSLBuilder::GraphicsSource::RegisterBlob(ShaderStage shaderStage, OutputTarget outputTarget)
 {
+	BuildMessage(shaderStage);
 	std::stringstream fileOut;
 	fileOut << m_ParentPath << "/" << m_BaseName << BuildExtensionName(shaderStage, outputTarget);
 	auto fileTreated = fileOut.str();
@@ -235,4 +237,35 @@ const Json::Value* HLSLBuilder::GraphicsSource::GetProperties() const
 
 void HLSLBuilder::GraphicsSource::ValidateStages()
 {
+}
+
+void HLSLBuilder::GraphicsSource::SetCallback(std::function<void(std::string)> callback)
+{
+	m_Callback = callback;
+}
+
+std::string HLSLBuilder::GraphicsSource::GetBuildPath() const
+{
+	std::string sourcepath = (std::filesystem::path(m_ParentPath) / std::filesystem::path(m_BaseName)).string();
+	std::replace(sourcepath.begin(), sourcepath.end(), '\\', '/');
+	return sourcepath;
+}
+
+void HLSLBuilder::GraphicsSource::BuildMessage(ShaderStage stage)
+{
+	std::stringstream buffer;
+	static const std::unordered_map<ShaderStage, std::string_view> entrypointMapper =
+	{
+		{ ShaderStage::Vertex, "Vertex" },
+		{ ShaderStage::Pixel, "Pixel" }
+	};
+
+	buffer << "Building ";
+
+	auto it = entrypointMapper.find(stage);
+	if (it != entrypointMapper.end())
+		buffer << it->second.data();
+
+	buffer << " Stage";
+	m_Callback(buffer.str());
 }

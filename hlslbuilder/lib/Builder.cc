@@ -11,6 +11,7 @@ HLSLBuilder::Version HLSLBuilder::Builder::s_VulkanVersion;
 HLSLBuilder::BuildMode HLSLBuilder::Builder::s_BuildMode;
 HLSLBuilder::OutputTarget HLSLBuilder::Builder::s_OutputTarget;
 Json::Value HLSLBuilder::Builder::s_Output;
+std::function<void(std::string)> HLSLBuilder::Builder::s_Callback = [](std::string value){};
 
 void HLSLBuilder::Builder::SetBuildArgs(Json::Value& solution, BuildMode buildMode, OutputTarget outputTarget)
 {
@@ -55,6 +56,7 @@ void HLSLBuilder::Builder::BuildSources()
 	uint32_t count = 0u;
 	for (auto& i : s_GraphicsSources)
 	{
+		SendBuildMessage(i);
 		i.CompileShaders(s_BuildMode, s_OutputTarget, s_HLSLVersion, s_VulkanVersion);
 		s_Output["GraphicsShaders"][count] = *(i.GetProperties());
 		count++;
@@ -74,6 +76,22 @@ void HLSLBuilder::Builder::BuildSources()
 void HLSLBuilder::Builder::Clear()
 {
 	s_GraphicsSources.clear();
+}
+
+void HLSLBuilder::Builder::SetCallback(std::function<void(std::string)> callback)
+{
+	s_Callback = callback;
+	for (auto& i : s_GraphicsSources)
+	{
+		i.SetCallback(callback);
+	}
+}
+
+void HLSLBuilder::Builder::SendBuildMessage(const Source& source)
+{
+	std::stringstream buffer;
+	buffer << "Building file: " << source.GetBuildPath();
+	s_Callback(buffer.str());
 }
 
 void HLSLBuilder::Builder::ValidateHLSLVersion()

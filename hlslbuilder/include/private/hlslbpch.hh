@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <filesystem>
 #include <regex>
+#include <functional>
 #ifdef HLSLB_WINDOWS
 	#include <d3dcompiler.h>
 #endif

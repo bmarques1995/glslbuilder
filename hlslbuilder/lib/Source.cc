@@ -5,5 +5,3 @@ const std::unordered_map<HLSLBuilder::ShaderStage, std::string_view> HLSLBuilder
 	{ ShaderStage::Vertex, "VertexEntry" },
 	{ ShaderStage::Pixel, "PixelEntry" }
 };
-
-

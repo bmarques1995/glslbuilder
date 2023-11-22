@@ -22,6 +22,11 @@ namespace HLSLBuilder
 		void CompileShaders(BuildMode buildMode, OutputTarget outputTarget, Version HLSLVersion, Version VulkanVersion) override;
 		const Json::Value* GetProperties() const override;
 		void ValidateStages() override;
+
+		void SetCallback(std::function<void(std::string)> callback) override;
+		std::string GetBuildPath() const override;
+
+		void BuildMessage(ShaderStage stage);
 	private:
 
 		void CompileD3DCGroup(BuildMode buildMode, Version HLSLVersion);
@@ -44,6 +49,7 @@ namespace HLSLBuilder
 
 		Json::Value m_Properties;
 		std::unordered_map<ShaderStage, ComPtr<IDxcBlob>> m_Blobs;
+		std::function<void(std::string)> m_Callback;
 
 		static const std::unordered_map<ShaderStage, std::string_view> s_FileEndpointMapper;
 	};
