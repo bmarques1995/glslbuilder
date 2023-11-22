@@ -46,7 +46,6 @@ const std::list<HLSLBuilder::ArgCategory> HLSLBuilder::ArgList::s_ControlArgs = 
 void HLSLBuilder::ArgList::PushRawArg(std::string_view arg)
 {
 	std::string parsedArg = arg.data();
-	StringHandler::ToLower(&parsedArg);
 	s_StrArgs.push_back(parsedArg);
 }
 
@@ -111,7 +110,9 @@ void HLSLBuilder::ArgList::ValidateControlAssignment(std::string_view value, HLS
 
 void HLSLBuilder::ArgList::PushInfoArgTreated(std::string_view arg)
 {
-	auto it = s_ArgMapper.find(arg);
+	std::string treatedArg = arg.data();
+	StringHandler::ToLower(&treatedArg);
+	auto it = s_ArgMapper.find(treatedArg);
 	if (it != s_ArgMapper.end())
 	{
 		//multiple push treatment
@@ -144,25 +145,31 @@ void HLSLBuilder::ArgList::PushControlArgTreated(std::sregex_token_iterator* arg
 		++(*arg);
 		++i;
 	}
-	auto it = s_ArgMapper.find(args[0]);
+	std::string treatedArg = args[0];
+	StringHandler::ToLower(&treatedArg);
+	std::string treatedValue = args[1];
+	delete[] args;
+	auto it = s_ArgMapper.find(treatedArg);
 	if (it != s_ArgMapper.end())
 	{
+		if(it->second != ArgCategory::BUILD)
+			StringHandler::ToLower(&treatedValue);
 		if (s_InfoAssigned)
 			throw InvalidUsageException(false);
 		if (ArgumentPushed(it->second))
-			throw MultipleArgPushException(args[0]);
+			throw MultipleArgPushException(treatedArg);
 		auto list_it = std::find(s_ControlArgs.begin(), s_ControlArgs.end(), it->second);
 		if (list_it == s_ControlArgs.end())
-			throw MismatchArgException(args[0], false);
+			throw MismatchArgException(treatedArg, false);
 		else
 		{
-			ValidateControlAssignment(args[1], it->second);
-			s_ControlArgTree.push_back(std::make_pair(it->second, args[1]));
+			ValidateControlAssignment(treatedValue, it->second);
+			s_ControlArgTree.push_back(std::make_pair(it->second, treatedValue));
 		}
 	}
 	else
-		throw InvalidArgException(args[0]);
-	delete[] args;
+		throw InvalidArgException(treatedArg);
+	
 }
 
 bool HLSLBuilder::ArgList::ArgumentPushed(ArgCategory category)
