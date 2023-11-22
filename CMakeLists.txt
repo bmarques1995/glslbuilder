@@ -7,6 +7,15 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,Release>:EditAndContinue>,$<$<CONFIG:Debug,Release>:ProgramDatabase>>")
 endif()
 
+option(BUILD_CLI "Build the Command Line Interface" OFF)
+option(BUILD_TESTS "Build the tests" OFF)
+
 add_subdirectory(hlslbuilder)
-add_subdirectory(hlslbuilder_exec)
-add_subdirectory(hlslbuilder_tests)
+
+if(BUILD_CLI)
+	add_subdirectory(hlslbuilder_exec)
+endif()
+
+if(BUILD_TESTS)
+	add_subdirectory(hlslbuilder_tests)
+endif()
