@@ -1,11 +1,8 @@
 include(CMakeFindDependencyMacro)
 
-set(hlslbuilder_FOUND "HLSL Builder was found" ON)
-
 if(NOT jsoncpp_FOUND)
     find_package(jsoncpp REQUIRED)
 endif()
-
 
 find_library(NAMES HLSL TARGET dxcompiler REQUIRED)
 if(WIN32)
