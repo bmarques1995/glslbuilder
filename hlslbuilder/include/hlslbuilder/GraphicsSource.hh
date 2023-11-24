@@ -40,6 +40,7 @@ namespace HLSLBuilder
 		std::string BuildShaderStageName(ShaderStage shaderStage, Version hlslVersion);
 		std::string BuildExtensionName(ShaderStage shaderStage, OutputTarget outputTarget);
 		std::string BuildVulkanVersion(Version vulkanVersion);
+		std::string BuildBlobRelativePath(ShaderStage shaderStage, OutputTarget outputTarget);
 
 		void RegisterBlob(ShaderStage shaderStage, OutputTarget outputTarget);
 

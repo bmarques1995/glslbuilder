@@ -59,7 +59,7 @@ void HLSLBuilder::GraphicsSource::D3DCBuildShader(BuildMode buildMode, ShaderSta
 		constMapResolver = solution["GraphicsPipeline"][it->second.data()].asString();
 
 	std::string shaderTarget = BuildShaderStageName(shaderStage, hlslVersion);
-	std::string outputExtension = BuildExtensionName(shaderStage, OutputTarget::CSO);
+	
 
 	uint32_t compileFlags = buildMode == BuildMode::DEBUG ? D3DCOMPILE_DEBUG : D3DCOMPILE_OPTIMIZATION_LEVEL3;
 
@@ -75,15 +75,12 @@ void HLSLBuilder::GraphicsSource::D3DCBuildShader(BuildMode buildMode, ShaderSta
 	}
 	else
 	{
-		m_Blobs[shaderStage] = resultBlob;
-		std::stringstream fileOut;
+		BuildMessage(shaderStage);
 		present = true;
-		fileOut << m_ParentPath << "/" << m_BaseName << outputExtension.c_str();
-		auto it = s_FileEndpointMapper.find(shaderStage);
-		if (it != s_FileEndpointMapper.end())
-			constMapResolver = it->second.data();
-		m_Properties[constMapResolver] = fileOut.str();
-		FileHandler::WriteBinFile(fileOut.str().c_str(), reinterpret_cast<std::byte*>(resultBlob->GetBufferPointer()), resultBlob->GetBufferSize());
+		m_Blobs[shaderStage] = resultBlob;
+		
+		std::string fileOut = BuildBlobRelativePath(shaderStage, OutputTarget::CSO);
+		FileHandler::WriteBinFile(fileOut.c_str(), reinterpret_cast<std::byte*>(resultBlob->GetBufferPointer()), resultBlob->GetBufferSize());
 		//Console::Log("{0} successfully compiled", fileOut.str());
 	}
 	ValidateStage(shaderStage, present);
@@ -222,19 +219,32 @@ std::string HLSLBuilder::GraphicsSource::BuildVulkanVersion(Version vulkanVersio
 	return buffer.str();
 }
 
-void HLSLBuilder::GraphicsSource::RegisterBlob(ShaderStage shaderStage, OutputTarget outputTarget)
+std::string HLSLBuilder::GraphicsSource::BuildBlobRelativePath(ShaderStage shaderStage, OutputTarget outputTarget)
 {
-	BuildMessage(shaderStage);
+	std::string outputExtension = BuildExtensionName(shaderStage, outputTarget);
 	std::stringstream fileOut;
-	fileOut << m_ParentPath << "/" << m_BaseName << BuildExtensionName(shaderStage, outputTarget);
-	auto fileTreated = fileOut.str();
-	std::replace(fileTreated.begin(), fileTreated.end(), '\\', '/');
 	std::string constMapResolver;
+	Json::Value solution = *(SolutionParser::GetSolution());
+	std::filesystem::path relativeOut = std::filesystem::relative(std::filesystem::path(m_ParentPath), std::filesystem::path(solution["RunningPath"].asString()));
+	std::string relativeOutResult = relativeOut.string();
+	std::replace(relativeOutResult.begin(), relativeOutResult.end(), '.', '\0');
+	
+	if (strncmp(relativeOutResult.c_str(), "", 2) != 0)
+		fileOut << "./" << relativeOutResult << "/" << m_BaseName << outputExtension.c_str();
+	else
+		fileOut << "./" << m_BaseName << outputExtension.c_str();
 	auto it = s_FileEndpointMapper.find(shaderStage);
 	if (it != s_FileEndpointMapper.end())
 		constMapResolver = it->second.data();
-	m_Properties[constMapResolver] = fileTreated;
-	FileHandler::WriteBinFile(fileOut.str().c_str(), reinterpret_cast<std::byte*>(m_Blobs[shaderStage]->GetBufferPointer()), m_Blobs[shaderStage]->GetBufferSize());
+	m_Properties[constMapResolver] = fileOut.str();
+	return fileOut.str();
+}
+
+void HLSLBuilder::GraphicsSource::RegisterBlob(ShaderStage shaderStage, OutputTarget outputTarget)
+{
+	BuildMessage(shaderStage);
+	std::string fileOut = BuildBlobRelativePath(shaderStage, OutputTarget::CSO);
+	FileHandler::WriteBinFile(fileOut.c_str(), reinterpret_cast<std::byte*>(m_Blobs[shaderStage]->GetBufferPointer()), m_Blobs[shaderStage]->GetBufferSize());
 	//Console::Log("{0} successfully compiled", fileOut.str());
 }
 
