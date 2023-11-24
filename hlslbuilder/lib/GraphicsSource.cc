@@ -18,6 +18,7 @@ HLSLBuilder::GraphicsSource::GraphicsSource(std::string_view path) :
 	FileHandler::ReadTextFile(path, &m_SourceCode);
 	std::filesystem::path pathName(path.data());
 	m_BaseName = pathName.stem().string();
+	m_Properties["BaseName"] = m_BaseName;
 	m_ParentPath = pathName.parent_path().string();
 	std::replace(m_ParentPath.begin(), m_ParentPath.end(), '\\', '/');
 }
@@ -46,6 +47,7 @@ void HLSLBuilder::GraphicsSource::D3DCBuildShader(BuildMode buildMode, ShaderSta
 {
 	ComPtr<ID3DBlob> errorBlob;
 	ComPtr<IDxcBlob> resultBlob;
+	bool present = false;
 	std::stringstream treated_arg;
 	std::string target = treated_arg.str();
 	treated_arg.str("");
@@ -75,6 +77,7 @@ void HLSLBuilder::GraphicsSource::D3DCBuildShader(BuildMode buildMode, ShaderSta
 	{
 		m_Blobs[shaderStage] = resultBlob;
 		std::stringstream fileOut;
+		present = true;
 		fileOut << m_ParentPath << "/" << m_BaseName << outputExtension.c_str();
 		auto it = s_FileEndpointMapper.find(shaderStage);
 		if (it != s_FileEndpointMapper.end())
@@ -83,6 +86,7 @@ void HLSLBuilder::GraphicsSource::D3DCBuildShader(BuildMode buildMode, ShaderSta
 		FileHandler::WriteBinFile(fileOut.str().c_str(), reinterpret_cast<std::byte*>(resultBlob->GetBufferPointer()), resultBlob->GetBufferSize());
 		//Console::Log("{0} successfully compiled", fileOut.str());
 	}
+	ValidateStage(shaderStage, present);
 }
 
 void HLSLBuilder::GraphicsSource::DXCBuildShader(BuildMode buildMode, OutputTarget outputTarget, Version VulkanVersion, ShaderStage shaderStage, Version hlslVersion)
@@ -90,6 +94,8 @@ void HLSLBuilder::GraphicsSource::DXCBuildShader(BuildMode buildMode, OutputTarg
 	ComPtr<IDxcUtils> dxc_utils = { 0 };
 	ComPtr<IDxcCompiler3> dxcompiler = { 0 };
 	ComPtr<IDxcBlob> resultBlob;
+
+	bool present = false;
 
 	DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(dxc_utils.ReleaseAndGetAddressOf()));
 	DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(dxcompiler.GetAddressOf()));
@@ -126,8 +132,10 @@ void HLSLBuilder::GraphicsSource::DXCBuildShader(BuildMode buildMode, OutputTarg
 	else
 	{
 		m_Blobs[shaderStage] = resultBlob;
+		present = true;
 		RegisterBlob(shaderStage, outputTarget);	
 	}
+	ValidateStage(shaderStage, present);
 }
 
 void HLSLBuilder::GraphicsSource::PushDxcArgList(std::vector<std::wstring>* argList, BuildMode buildMode, OutputTarget outputTarget, Version VulkanVersion, ShaderStage shaderStage, Version hlslVersion)
@@ -235,8 +243,24 @@ const Json::Value* HLSLBuilder::GraphicsSource::GetProperties() const
 	return &m_Properties;
 }
 
-void HLSLBuilder::GraphicsSource::ValidateStages()
+void HLSLBuilder::GraphicsSource::ValidateStage(ShaderStage stage, bool present)
 {
+	std::stringstream buffer;
+	static const std::unordered_map<ShaderStage, std::string_view> entrypointMapper =
+	{
+		{ ShaderStage::Vertex, "Vertex" },
+		{ ShaderStage::Pixel, "Pixel" }
+	};
+
+	if (((stage == ShaderStage::Vertex) || (stage == ShaderStage::Pixel)) && !present)
+	{
+		auto it = entrypointMapper.find(stage);
+		if (it != entrypointMapper.end())
+			buffer << it->second.data();
+
+		buffer << " Stage is mandatory";
+		throw InvalidGraphicsPipelineException(buffer.str());
+	}
 }
 
 void HLSLBuilder::GraphicsSource::SetCallback(std::function<void(std::string)> callback)
@@ -268,4 +292,9 @@ void HLSLBuilder::GraphicsSource::BuildMessage(ShaderStage stage)
 
 	buffer << " Stage";
 	m_Callback(buffer.str());
+}
+
+HLSLBuilder::InvalidGraphicsPipelineException::InvalidGraphicsPipelineException(std::string message)
+{
+	m_Exception = message;
 }

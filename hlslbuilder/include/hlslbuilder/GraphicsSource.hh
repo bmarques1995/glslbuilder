@@ -21,7 +21,7 @@ namespace HLSLBuilder
 		GraphicsSource(std::string_view path);
 		void CompileShaders(BuildMode buildMode, OutputTarget outputTarget, Version HLSLVersion, Version VulkanVersion) override;
 		const Json::Value* GetProperties() const override;
-		void ValidateStages() override;
+		void ValidateStage(ShaderStage stage, bool present) override;
 
 		void SetCallback(std::function<void(std::string)> callback) override;
 		std::string GetBuildPath() const override;
@@ -52,5 +52,11 @@ namespace HLSLBuilder
 		std::function<void(std::string)> m_Callback;
 
 		static const std::unordered_map<ShaderStage, std::string_view> s_FileEndpointMapper;
+	};
+
+	class HLSLB_API InvalidGraphicsPipelineException : public InvalidPipelineException
+	{
+	public:
+		InvalidGraphicsPipelineException(std::string message);
 	};
 }
