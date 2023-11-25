@@ -50,7 +50,7 @@ target_link_libraries(${LIB_NAME} PUBLIC jsoncpp_static dxcompiler)
 if(WIN32)
     target_link_libraries(${LIB_NAME} PUBLIC d3dcompiler)
 endif()
-target_compile_definitions(${LIB_NAME} PUBLIC SPDLOG_WCHAR_TO_UTF8_SUPPORT _CRT_NONSTDC_NO_WARNINGS)
+target_compile_definitions(${LIB_NAME} PUBLIC)
 
 if(WIN32)
     target_compile_definitions(${LIB_NAME} PUBLIC HLSLB_WINDOWS)
