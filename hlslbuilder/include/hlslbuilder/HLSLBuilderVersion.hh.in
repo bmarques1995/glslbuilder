@@ -1,6 +1,0 @@
-#pragma once
-
-namespace HLSLBuilder
-{
-    constexpr const char* HLSLBuilderVersion = "CMAKE_VERSION"\\; 
-}

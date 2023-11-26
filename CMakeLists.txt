@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(hlslbuilder VERSION 0.1.0)
+project(glslbuilder VERSION 0.1.0)
 
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
@@ -10,12 +10,12 @@ endif()
 option(BUILD_CLI "Build the Command Line Interface" OFF)
 option(BUILD_TESTS "Build the tests" OFF)
 
-add_subdirectory(hlslbuilder)
+add_subdirectory(glslbuilder)
 
 if(BUILD_CLI)
-	add_subdirectory(hlslbuilder_exec)
+	add_subdirectory(glslbuilder_exec)
 endif()
 
 if(BUILD_TESTS)
-	add_subdirectory(hlslbuilder_tests)
+	add_subdirectory(glslbuilder_tests)
 endif()

@@ -1,0 +1,6 @@
+#pragma once
+
+namespace GLSLBuilder
+{
+    constexpr const char* GLSLBuilderVersion = "CMAKE_VERSION"\\; 
+}

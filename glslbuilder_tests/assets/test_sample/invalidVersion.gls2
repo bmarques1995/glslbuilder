@@ -1,0 +1,9 @@
+{
+  "GraphicsPipelineSources": [
+    "./test.hlsl"
+  ],
+  "GraphicsPipeline": {
+    "VertexEntry": "vs_main",
+    "PixelEntry": "ps_main"
+  }
+}
