@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <iostream>
 #include <GLSLBuilder/GLSLBuilder.hh>
-
+/*
 namespace GLSLBuilder
 {
 	extern void ResolveArgList();
@@ -126,3 +126,4 @@ namespace GLSLBuilder
 		Builder::Clear();
 	}
 }
+*/

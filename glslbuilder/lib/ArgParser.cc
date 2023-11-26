@@ -51,7 +51,7 @@ void GLSLBuilder::ArgParser::ValidateFileExtension(std::string_view path)
 
 	if (std::regex_match(filePath, match, extensionRegex)) {
 		std::string extension = match.str(1);
-		std::string expectedExtension = "hls2";
+		std::string expectedExtension = "gls2";
 		if (expectedExtension.compare(extension) != 0)
 		{
 			throw MismatchSolutionFileExtensionException();

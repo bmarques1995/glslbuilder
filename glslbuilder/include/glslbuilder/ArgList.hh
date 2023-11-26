@@ -68,13 +68,11 @@ namespace GLSLBuilder
 		static std::vector<std::string> s_StrArgs;
 
 		static void ClassifyAndEvaluateArgs(std::string_view arg);
-		static void ValidateControlAssignment(std::string_view value, GLSLBuilder::ArgCategory category);
 		static void PushInfoArgTreated(std::string_view arg);
 		static void PushControlArgTreated(std::sregex_token_iterator* arg);
 		static bool ArgumentPushed(ArgCategory category);
 
 		static const std::unordered_map<std::string_view, ArgCategory> s_ArgMapper;
-		static const std::unordered_map<std::string_view, ArgCategory> s_ValidAssignments;
 		static std::unordered_map<ArgCategory, std::string_view> s_ArgValues;
 
 		static const std::list<ArgCategory> s_InfoArgs;

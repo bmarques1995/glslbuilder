@@ -48,17 +48,9 @@ namespace GLSLBuilder
 		ArgList::ClearArgs();
 	}
 
-	TEST(GLSLBuilder, InvalidAssignment)
-	{
-		//ij
-		ArgList::PushRawArg("-c:CSOs");
-		ASSERT_THROW(ArgList::ResolveArgs(), GLSLBuilder::BadEvaluationException);
-		ArgList::ClearArgs();
-	}
-
 	TEST(GLSLBuilder, InvalidControlUsage)
 	{
-		ArgList::PushRawArg("-api:CSO");
+		ArgList::PushRawArg("-b:./CSO");
 		ArgList::PushRawArg("--version");
 		ASSERT_THROW(ArgList::ResolveArgs(), GLSLBuilder::InvalidUsageException);
 		ArgList::ClearArgs();
@@ -67,7 +59,7 @@ namespace GLSLBuilder
 	TEST(GLSLBuilder, InvalidInfoUsage)
 	{
 		ArgList::PushRawArg("--version");
-		ArgList::PushRawArg("-api:CSO");
+		ArgList::PushRawArg("-b:./CSO");
 		ASSERT_THROW(ArgList::ResolveArgs(), GLSLBuilder::InvalidUsageException);
 		ArgList::ClearArgs();
 	}
@@ -83,11 +75,9 @@ namespace GLSLBuilder
 
 	TEST(GLSLBuilder, ValidControlUsage)
 	{
-		ArgList::PushRawArg("-api:CSO");
 		ArgList::PushRawArg("-b:./");
 		std::list<std::pair<ArgCategory, std::string>> expectedValues =
 		{
-			{ArgCategory::API, "cso"},
 			{ArgCategory::BUILD, "./"}
 		};
 		ASSERT_NO_THROW(ArgList::ResolveArgs());

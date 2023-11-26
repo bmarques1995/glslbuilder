@@ -5,26 +5,14 @@
 std::vector<std::string> GLSLBuilder::ArgList::s_StrArgs = std::vector<std::string>();
 const std::unordered_map<std::string_view, GLSLBuilder::ArgCategory> GLSLBuilder::ArgList::s_ArgMapper =
 {
-	{"-api", GLSLBuilder::ArgCategory::API},
-	{"--target-api", GLSLBuilder::ArgCategory::API},
 	{"-b", GLSLBuilder::ArgCategory::BUILD},
 	{"--build", GLSLBuilder::ArgCategory::BUILD},
-	{"-c", GLSLBuilder::ArgCategory::CONFIG},
-	{"--config", GLSLBuilder::ArgCategory::CONFIG},
 	{"-h", GLSLBuilder::ArgCategory::HELP},
 	{"--help", GLSLBuilder::ArgCategory::HELP},
 	{"-v", GLSLBuilder::ArgCategory::VERSION},
 	{"--version", GLSLBuilder::ArgCategory::VERSION}
 };
 std::unordered_map<GLSLBuilder::ArgCategory, std::string_view> GLSLBuilder::ArgList::s_ArgValues;
-
-const std::unordered_map<std::string_view, GLSLBuilder::ArgCategory> GLSLBuilder::ArgList::s_ValidAssignments =
-{
-	{"cso", GLSLBuilder::ArgCategory::API},
-	{"spv", GLSLBuilder::ArgCategory::API},
-	{"debug", GLSLBuilder::ArgCategory::CONFIG},
-	{"release", GLSLBuilder::ArgCategory::CONFIG}
-};
 
 GLSLBuilder::ArgCategory GLSLBuilder::ArgList::s_InfoArg;
 bool GLSLBuilder::ArgList::s_InfoAssigned;
@@ -99,15 +87,6 @@ void GLSLBuilder::ArgList::ClassifyAndEvaluateArgs(std::string_view arg)
 
 }
 
-void GLSLBuilder::ArgList::ValidateControlAssignment(std::string_view value, GLSLBuilder::ArgCategory category)
-{
-	if (category == ArgCategory::BUILD)
-		return;
-	auto list_it = s_ValidAssignments.find(value);
-	if ((list_it == s_ValidAssignments.end()) || (list_it->second != category))
-		throw BadEvaluationException(category, value.data());
-}
-
 void GLSLBuilder::ArgList::PushInfoArgTreated(std::string_view arg)
 {
 	std::string treatedArg = arg.data();
@@ -163,7 +142,6 @@ void GLSLBuilder::ArgList::PushControlArgTreated(std::sregex_token_iterator* arg
 			throw MismatchArgException(treatedArg, false);
 		else
 		{
-			ValidateControlAssignment(treatedValue, it->second);
 			s_ControlArgTree.push_back(std::make_pair(it->second, treatedValue));
 		}
 	}

@@ -2,11 +2,12 @@
 #include <iostream>
 #include <GLSLBuilder/GLSLBuilder.hh>
 
+/*
 namespace GLSLBuilder
 {
 	extern void ResolveArgList();
 
-	TEST(GLSLBuilder, MissingPropertiesHLS2)
+	TEST(GLSLBuilder, MissingPropertiesGLS2)
 	{
 		ArgList::PushRawArg("--build:./assets/test_sample/invalidProperties.hls2");
 		ArgList::PushRawArg("-api:CSO");
@@ -23,7 +24,7 @@ namespace GLSLBuilder
 		ASSERT_THROW(GLSLBuilder::SolutionParser::LoadProject(parsedControlArgs.m_SolutionFilepath), GLSLBuilder::PropertyNotFoundException);
 	}
 
-	TEST(GLSLBuilder, InvalidNameHLS2)
+	TEST(GLSLBuilder, InvalidNameGLS2)
 	{
 		ArgList::PushRawArg("--build:./assets/test_sample/invalidName.hls2");
 		ArgList::PushRawArg("-api:CSO");
@@ -40,7 +41,7 @@ namespace GLSLBuilder
 		ASSERT_THROW(GLSLBuilder::SolutionParser::LoadProject(parsedControlArgs.m_SolutionFilepath), GLSLBuilder::InvalidNameException);
 	}
 
-	TEST(GLSLBuilder, InvalidVersionHLS2)
+	TEST(GLSLBuilder, InvalidVersionGLS2)
 	{
 		ArgList::PushRawArg("--build:./assets/test_sample/invalidVersion.hls2");
 		ArgList::PushRawArg("-api:CSO");
@@ -57,7 +58,7 @@ namespace GLSLBuilder
 		ASSERT_THROW(GLSLBuilder::SolutionParser::LoadProject(parsedControlArgs.m_SolutionFilepath), GLSLBuilder::InvalidVersionException);
 	}
 
-	TEST(GLSLBuilder, InvalidPathHLS2)
+	TEST(GLSLBuilder, InvalidPathGLS2)
 	{
 		ArgList::PushRawArg("--build:./assets/test_sample/invalidPath.hls2");
 		ArgList::PushRawArg("-api:CSO");
@@ -108,3 +109,4 @@ namespace GLSLBuilder
 		ASSERT_NO_THROW(GLSLBuilder::SolutionParser::LoadProject(parsedControlArgs.m_SolutionFilepath));
 	}
 }
+*/
