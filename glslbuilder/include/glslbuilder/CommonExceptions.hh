@@ -6,7 +6,7 @@
 
 namespace GLSLBuilder
 {
-	class GLSLB_API HLSLBuilderException : public std::exception
+	class GLSLB_API GLSLBuilderException : public std::exception
 	{
 	public:
 		const char* what() const override;

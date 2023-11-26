@@ -7,13 +7,6 @@ GLSLBuilder::PropertyNotFoundException::PropertyNotFoundException(std::string_vi
 	m_Exception = buffer.str();
 }
 
-GLSLBuilder::InvalidVersionException::InvalidVersionException(std::string_view arg)
-{
-	std::stringstream buffer;
-	buffer << "Argument: " << arg.data() << " is not a version argument, that follows the property <unsigned>.<unsigned>";
-	m_Exception = buffer.str();
-}
-
 GLSLBuilder::InvalidNameException::InvalidNameException(std::string_view arg)
 {
 	std::stringstream buffer;

@@ -7,11 +7,10 @@ namespace GLSLBuilder
 	enum class PropertyType
 	{
 		NAME = 0,
-		PATH_ARRAY,
-		VERSION
+		PATH_ARRAY
 	};
 
-	class GLSLB_API PropertyException : public HLSLBuilderException
+	class GLSLB_API PropertyException : public GLSLBuilderException
 	{
 	};
 
@@ -24,17 +23,6 @@ namespace GLSLBuilder
 	{
 	public:
 		PropertyNotFoundException(std::string_view property);
-	};
-
-	/**
-	* InvalidVersionException is an exception thrown when there is a mismatch in a version argument.
-	*
-	* More details can be found in [HLS2](@ref docs/hls2.md).
-	*/
-	class GLSLB_API InvalidVersionException : public PropertyException
-	{
-	public:
-		InvalidVersionException(std::string_view arg);
 	};
 
 	/**

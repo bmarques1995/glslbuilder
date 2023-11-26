@@ -20,7 +20,7 @@ namespace GLSLBuilder
 	/**
 	* ArgException is a base exception that stores the message string and the getter of the message.
 	*/
-	class GLSLB_API ArgException : public HLSLBuilderException
+	class GLSLB_API ArgException : public GLSLBuilderException
 	{
 	};
 

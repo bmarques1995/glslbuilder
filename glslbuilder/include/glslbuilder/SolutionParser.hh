@@ -32,11 +32,10 @@ namespace GLSLBuilder
 		static void ValidateJSONProperties();
 		static void ValidateProperty(std::pair<std::string, GLSLBuilder::PropertyType> property);
 		static void ValidatePropertyType(Json::Value& innerProperties, PropertyType property, std::string_view key);
-		static void ValidateVersion(std::string_view version);
 		static void ValidateName(std::string_view name);
 		static void ValidatePath(std::string path);
 		static void ValidatePathArray(Json::Value& innerProperties, std::string_view key);
-		static Json::Value s_HLS2Solution;
+		static Json::Value s_GLS2Solution;
 		static const std::list<std::pair<std::string, PropertyType>> s_ValidProperties;
 	};
 }

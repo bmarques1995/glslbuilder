@@ -42,27 +42,3 @@ std::string GLSLBuilder::Version::ToString() const
 	castedVersion = buffer.str();
 	return castedVersion;
 }
-
-GLSLBuilder::InvalidHLSLVersionException::InvalidHLSLVersionException(Version version)
-{
-	std::stringstream buffer;
-	buffer << "HLSL " << version.Major << "." << version.Minor << " isn't supported or do not exists";
-	m_Exception = buffer.str();
-}
-
-GLSLBuilder::InvalidVulkanVersionException::InvalidVulkanVersionException(Version version)
-{
-	std::stringstream buffer;
-	buffer << "Vulkan " << version.Major << "." << version.Minor << " isn't supported or do not exists";
-	m_Exception = buffer.str();
-}
-
-GLSLBuilder::InvalidSPVSupportException::InvalidSPVSupportException()
-{
-	m_Exception = "Spir-V output is allowed only after HLSL 6.0";
-}
-
-GLSLBuilder::CompileErrorException::CompileErrorException(std::string error)
-{
-	m_Exception = error;
-}

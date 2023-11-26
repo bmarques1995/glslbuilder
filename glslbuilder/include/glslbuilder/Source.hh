@@ -30,7 +30,7 @@ namespace GLSLBuilder
 		static const std::unordered_map<ShaderStage, std::string_view> s_EntrypointMapper;
 	};
 	
-	class GLSLB_API InvalidPipelineException : public HLSLBuilderException
+	class GLSLB_API InvalidPipelineException : public GLSLBuilderException
 	{
 	
 	};

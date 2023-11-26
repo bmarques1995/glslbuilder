@@ -1,6 +1,6 @@
 #include "CommonExceptions.hh"
 
-const char* GLSLBuilder::HLSLBuilderException::what() const
+const char* GLSLBuilder::GLSLBuilderException::what() const
 {
 	return m_Exception.c_str();
 }

@@ -20,26 +20,8 @@ namespace GLSLBuilder
 		std::string ToString() const;
 	};
 
-	class CompilerException : public HLSLBuilderException
+	class CompilerException : public GLSLBuilderException
 	{
-	};
-
-	class InvalidHLSLVersionException : public CompilerException
-	{
-	public:
-		InvalidHLSLVersionException(Version version);
-	};
-
-	class InvalidVulkanVersionException : public CompilerException
-	{
-	public:
-		InvalidVulkanVersionException(Version version);
-	};
-
-	class InvalidSPVSupportException : public CompilerException
-	{
-	public:
-		InvalidSPVSupportException();
 	};
 
 	class CompileErrorException : public CompilerException

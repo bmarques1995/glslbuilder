@@ -50,7 +50,7 @@ namespace GLSLBuilder
 	*   * MismatchSolutionFileExtensionException
 	*   * SolutionFileNotFoundException
 	*/
-	class GLSLB_API SolutionFileException : public HLSLBuilderException
+	class GLSLB_API SolutionFileException : public GLSLBuilderException
 	{
 	};
 

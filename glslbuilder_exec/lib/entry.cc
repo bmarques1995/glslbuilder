@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 		GLSLBuilderCLI::Console::Critical("{0}\n", e.what());
 		exit(1);
 	}
-	catch (GLSLBuilder::HLSLBuilderException e) 
+	catch (GLSLBuilder::GLSLBuilderException e) 
 	{
 		GLSLBuilderCLI::Console::Error(e.what());
 		exit(3);
