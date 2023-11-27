@@ -1,6 +1,6 @@
 #version 450 core
 
-#ifdef vs_main
+#pragma type(vs_main)
 
 layout(location = 0) in vec3 POSITION;
 layout(location = 1) in vec4 COLOR;
@@ -13,9 +13,9 @@ void main()
     v_Color = COLOR;
 }
 
-#endif
+#pragma endtype
 
-#ifdef ps_main
+#pragma type(ps_main)
 
 layout(location = 0) out vec4 o_Color;
 
@@ -24,4 +24,4 @@ void main()
     o_Color = v_Color;
 }
 
-#endif
+#pragma endtype

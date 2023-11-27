@@ -25,9 +25,7 @@ const std::list<GLSLBuilder::ArgCategory> GLSLBuilder::ArgList::s_InfoArgs = std
 });
 const std::list<GLSLBuilder::ArgCategory> GLSLBuilder::ArgList::s_ControlArgs = std::list<GLSLBuilder::ArgCategory>(
 {
-	GLSLBuilder::ArgCategory::API,
-	GLSLBuilder::ArgCategory::BUILD,
-	GLSLBuilder::ArgCategory::CONFIG
+	GLSLBuilder::ArgCategory::BUILD
 });
 #pragma endregion
 

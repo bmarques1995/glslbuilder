@@ -26,8 +26,6 @@ namespace GLSLBuilder
 		static void CastMapToBuildInfos(std::unordered_map<GLSLBuilder::ArgCategory, std::string>& mappedArgs);
 		static void ValidateFileExtension(std::string_view path);
 		static void FindFile(std::string_view path);
-		static BuildMode CastStringToBuildMode(std::string strValue);
-		static OutputTarget CastStringToOutputTarget(std::string strValue);
 		static BuildInfos s_BuildInfos;
 	};
 }

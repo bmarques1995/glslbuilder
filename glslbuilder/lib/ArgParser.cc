@@ -32,15 +32,7 @@ void GLSLBuilder::ArgParser::CastMapToBuildInfos(std::unordered_map<GLSLBuilder:
 	ValidateFileExtension(filepath);
 	FindFile(filepath);
 
-	BuildMode buildMode = BuildMode::DEBUG;
-	OutputTarget outputTarget = OutputTarget::CSO;
-
-	if (mappedArgs.find(ArgCategory::CONFIG) != mappedArgs.end())
-		buildMode = CastStringToBuildMode(mappedArgs[ArgCategory::CONFIG]);
-	if (mappedArgs.find(ArgCategory::API) != mappedArgs.end())
-		outputTarget = CastStringToOutputTarget(mappedArgs[ArgCategory::API]);
-
-	s_BuildInfos = BuildInfos(filepath, buildMode, outputTarget);
+	s_BuildInfos = BuildInfos(filepath);
 }
 
 void GLSLBuilder::ArgParser::ValidateFileExtension(std::string_view path)
@@ -66,35 +58,4 @@ void GLSLBuilder::ArgParser::FindFile(std::string_view path)
 {
 	if (!std::filesystem::exists(path))
 		throw SolutionFileNotFoundException();
-}
-
-GLSLBuilder::BuildMode GLSLBuilder::ArgParser::CastStringToBuildMode(std::string strValue)
-{
-	const std::unordered_map<std::string, BuildMode> buildModeMap =
-	{
-		{ "debug", BuildMode::DEBUG },
-		{ "release", BuildMode::RELEASE }
-	};
-
-	auto it = buildModeMap.find(strValue);
-	if (it != buildModeMap.end())
-		return it->second;
-	else
-		return BuildMode::DEBUG;
-
-}
-
-GLSLBuilder::OutputTarget GLSLBuilder::ArgParser::CastStringToOutputTarget(std::string strValue)
-{
-	const std::unordered_map<std::string, OutputTarget> outputTargetMap =
-	{
-		{ "cso", OutputTarget::CSO },
-		{ "spv", OutputTarget::SPV }
-	};
-
-	auto it = outputTargetMap.find(strValue);
-	if (it != outputTargetMap.end())
-		return it->second;
-	else
-		return OutputTarget::CSO;
 }

@@ -21,7 +21,7 @@ namespace GLSLBuilder
 	class GLSLB_API Source
 	{
 	public:
-		virtual void CompileShaders(BuildMode buildMode, OutputTarget outputTarget, Version HLSLVersion, Version VulkanVersion) = 0;
+		virtual void PreprocessShaders() = 0;
 		virtual const Json::Value* GetProperties() const = 0;
 		virtual void ValidateStage(ShaderStage stage, bool present) = 0;
 		virtual void SetCallback(std::function<void(std::string)> callback) = 0;

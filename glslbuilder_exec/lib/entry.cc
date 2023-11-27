@@ -59,7 +59,7 @@ void BuildCommand()
 	auto parsedControlArgs = GLSLBuilder::ArgParser::GetBuildInfos();
 	GLSLBuilder::SolutionParser::LoadProject(parsedControlArgs.m_SolutionFilepath);
 	Json::Value solution = *GLSLBuilder::SolutionParser::GetSolution();
-	GLSLBuilder::Builder::SetBuildArgs(solution, parsedControlArgs.m_BuildMode, parsedControlArgs.m_OutputTarget);
+	GLSLBuilder::Builder::SetBuildArgs(solution);
 	GLSLBuilder::Builder::SetCallback(std::bind(&Callback, std::placeholders::_1));
 	GLSLBuilder::Builder::BuildSources();
 }

@@ -11,8 +11,6 @@ namespace GLSLBuilder
 	enum class ArgCategory
 	{
 		BUILD = 0,
-		API,
-		CONFIG,
 		HELP,
 		VERSION
 	};
@@ -53,17 +51,6 @@ namespace GLSLBuilder
 	{
 	public:
 		BadAssignmentException(std::string_view message);
-	};
-
-	/**
-	* BadEvaluationException is an exception thrown when an arg is assigned with an unallowed value.
-	*/
-	class GLSLB_API BadEvaluationException : public ArgException
-	{
-	public:
-		BadEvaluationException(ArgCategory category, std::string value);
-	private:
-		void BuildErrorString(ArgCategory category, std::string value);
 	};
 
 	/**

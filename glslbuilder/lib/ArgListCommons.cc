@@ -1,29 +1,5 @@
 #include "ArgListCommons.hh"
 
-GLSLBuilder::BadEvaluationException::BadEvaluationException(ArgCategory category, std::string value)
-{
-	BuildErrorString(category, value);
-}
-
-void GLSLBuilder::BadEvaluationException::BuildErrorString(ArgCategory category, std::string value)
-{
-	const std::unordered_map<ArgCategory, std::string> categoryCast =
-	{
-		{GLSLBuilder::ArgCategory::API, "-api"},
-		{GLSLBuilder::ArgCategory::API, "--target-api"},
-		{GLSLBuilder::ArgCategory::CONFIG, "-c"},
-		{GLSLBuilder::ArgCategory::CONFIG, "--config"}
-	};
-
-	std::stringstream error;
-	error << "Invalid assignment to: ";
-	auto category_it = categoryCast.find(category);
-	if (category_it != categoryCast.end())
-		error << category_it->second;
-	error << ", the value <" << value << "> isn't allowed";
-	m_Exception = error.str();
-}
-
 GLSLBuilder::InvalidArgException::InvalidArgException(std::string_view arg)
 {
 	BuildInvalidArgString(arg);

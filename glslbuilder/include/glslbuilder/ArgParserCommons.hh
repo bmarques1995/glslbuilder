@@ -4,41 +4,23 @@
 
 namespace GLSLBuilder
 {
-	enum class BuildMode
-	{
-		DEBUG = 0,
-		RELEASE
-	};
-
-	enum class OutputTarget
-	{
-		SPV = 0,
-		CSO
-	};
-
 	/**
 	* Contains all infos to build the project:
-	*	* SolutionPreProcessor file: *.hls2
-	*   * Build mode: debug/release
-	*   * Build api: spv(vulkan target)/cso(d3d target)
+	*	* SolutionPreProcessor file: *.gls2
 	*/
 	struct GLSLB_API BuildInfos
 	{
 	public:
-		BuildMode m_BuildMode;
-		OutputTarget m_OutputTarget;
 		std::string m_SolutionFilepath;
 
 		BuildInfos() :
-			m_SolutionFilepath("."),
-			m_OutputTarget(OutputTarget::CSO),
-			m_BuildMode(BuildMode::DEBUG)
+			m_SolutionFilepath(".")
 		{
 
 		}
 
-		BuildInfos(const std::string& filepath, BuildMode buildMode = BuildMode::DEBUG, OutputTarget outputTarget = OutputTarget::CSO) :
-			m_SolutionFilepath(filepath), m_BuildMode(buildMode), m_OutputTarget(outputTarget)
+		BuildInfos(const std::string& filepath) :
+			m_SolutionFilepath(filepath)
 		{
 
 		}
@@ -64,7 +46,7 @@ namespace GLSLBuilder
 	};
 
 	/**
-	* Thrown when the extension doesn't match ".hls2".
+	* Thrown when the extension doesn't match ".gls2".
 	*/
 	class GLSLB_API MismatchSolutionFileExtensionException : public SolutionFileException
 	{
@@ -73,7 +55,7 @@ namespace GLSLBuilder
 	};
 
 	/**
-	* Thrown when the ".hls2" file is not found.
+	* Thrown when the ".gls2" file is not found.
 	*/
 	class GLSLB_API SolutionFileNotFoundException : public SolutionFileException
 	{
