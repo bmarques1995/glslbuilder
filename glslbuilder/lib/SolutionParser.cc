@@ -10,7 +10,7 @@
 Json::Value GLSLBuilder::SolutionParser::s_GLS2Solution;
 const std::list<std::pair<std::string, GLSLBuilder::PropertyType>> GLSLBuilder::SolutionParser::s_ValidProperties =
 {
-	{ "GraphicsPipelineSources", GLSLBuilder::PropertyType::PATH_ARRAY },
+	{ "TextSources", GLSLBuilder::PropertyType::PATH_ARRAY },
 	{ "GraphicsPipeline->VertexEntry", GLSLBuilder::PropertyType::NAME },
 	{ "GraphicsPipeline->PixelEntry", GLSLBuilder::PropertyType::NAME }
 	//{ "GraphicsPipeline->GeometryEntry", HLSLBuilder::PropertyType::NAME },
