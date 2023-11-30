@@ -1,7 +1,6 @@
 {
   "TextSources": [
-    "./test.glsl",
-    "./textre.glsl"
+    "./invalidName.glsl"
   ],
   "GraphicsPipeline": {
     "VertexEntry": "vs_main",

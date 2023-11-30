@@ -13,8 +13,6 @@ void main()
     v_Color = COLOR;
 }
 
-#pop_entrypoint
-
 #push_entrypoint(ps_main)
 
 in vec4 v_Color;

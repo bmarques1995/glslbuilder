@@ -1,6 +1,6 @@
 {
-  "GraphicsPipelineSources": [
-    "./test.hlsl"
+  "TextSources": [
+    "./nonclosing.glsl"
   ],
   "GraphicsPipeline": {
     "VertexEntry": "vs_main",

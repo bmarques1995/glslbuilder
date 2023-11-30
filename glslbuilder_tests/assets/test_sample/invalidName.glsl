@@ -1,6 +1,6 @@
 #version 450 core
 
-#push_entrypoint(vs_main)
+#push_entrypoint(15vs_main)
 
 layout(location = 0) in vec3 POSITION;
 layout(location = 1) in vec4 COLOR;

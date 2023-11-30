@@ -1,7 +1,6 @@
 {
   "TextSources": [
-    "./test.glsl",
-    "./textre.glsl"
+    "./multipush.glsl"
   ],
   "GraphicsPipeline": {
     "VertexEntry": "vs_main",

@@ -2,7 +2,7 @@
 
 #version 450 core
 
-#push_entrypoint(vs_main)
+#push_entrypoint(vs_main)_
 
 layout(location = 0) in vec3 POSITION;
 layout(location = 1) in vec2 TEXCOORD;

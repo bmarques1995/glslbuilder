@@ -6,12 +6,8 @@
 #include <json/json.h>
 #include <list>
 #include <utility>
-#include <wrl.h>
-#include <dxcapi.h>
 #include <unordered_map>
 #include <filesystem>
 #include <regex>
 #include <functional>
-#ifdef HLSLB_WINDOWS
-	#include <d3dcompiler.h>
-#endif
+#include <cstdint>

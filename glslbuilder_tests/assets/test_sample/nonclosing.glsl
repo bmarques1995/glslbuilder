@@ -25,5 +25,3 @@ void main()
 {
     o_Color = v_Color;
 }
-
-#pop_entrypoint
