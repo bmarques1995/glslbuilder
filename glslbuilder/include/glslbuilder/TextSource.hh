@@ -33,4 +33,10 @@ namespace GLSLBuilder
 		static const std::unordered_map<ShaderStage, std::string_view> s_FileEndpointMapper;
 		static const std::unordered_map<ShaderStage, std::string_view> s_FileEntrypointMapper;
 	};
+
+	class GLSLB_API InvalidGraphicsPipelineException : public PreprocessorException
+	{
+	public:
+		InvalidGraphicsPipelineException(std::string message);
+	};
 }

@@ -29,6 +29,8 @@ void GLSLBuilder::TextSource::PreprocessShaders()
 {
 	PreprocessWithStage(ShaderStage::Vertex);
 	PreprocessWithStage(ShaderStage::Pixel);
+	ValidateStage(ShaderStage::Vertex, m_ProcessedShaders.find(ShaderStage::Vertex) != m_ProcessedShaders.end());
+	ValidateStage(ShaderStage::Pixel, m_ProcessedShaders.find(ShaderStage::Pixel) != m_ProcessedShaders.end());
 }
 
 const Json::Value* GLSLBuilder::TextSource::GetProperties() const
@@ -38,15 +40,34 @@ const Json::Value* GLSLBuilder::TextSource::GetProperties() const
 
 void GLSLBuilder::TextSource::ValidateStage(ShaderStage stage, bool present)
 {
+	std::stringstream buffer;
+	static const std::unordered_map<ShaderStage, std::string_view> entrypointMapper =
+	{
+		{ ShaderStage::Vertex, "Vertex" },
+		{ ShaderStage::Pixel, "Pixel" }
+	};
+
+	if (((stage == ShaderStage::Vertex) || (stage == ShaderStage::Pixel)) && !present)
+	{
+		auto it = entrypointMapper.find(stage);
+		if (it != entrypointMapper.end())
+			buffer << it->second.data();
+
+		buffer << " Stage is mandatory";
+		throw InvalidGraphicsPipelineException(buffer.str());
+	}
 }
 
 void GLSLBuilder::TextSource::SetCallback(std::function<void(std::string)> callback)
 {
+	m_Callback = callback;
 }
 
 std::string GLSLBuilder::TextSource::GetBuildPath() const
 {
-	return std::string();
+	std::string sourcepath = (std::filesystem::path(m_ParentPath) / std::filesystem::path(m_BaseName)).string();
+	std::replace(sourcepath.begin(), sourcepath.end(), '\\', '/');
+	return sourcepath;
 }
 
 void GLSLBuilder::TextSource::PreprocessWithStage(ShaderStage shaderStage)
@@ -127,4 +148,9 @@ std::string GLSLBuilder::TextSource::BuildTextRelativePath(ShaderStage shaderSta
 	m_Properties[constMapResolver] = fileOut.str();
 	std::filesystem::path registerPath = std::filesystem::path(m_ParentPath) / (fileOut.str());
 	return registerPath.string();
+}
+
+GLSLBuilder::InvalidGraphicsPipelineException::InvalidGraphicsPipelineException(std::string message)
+{
+	m_Exception = message;
 }
