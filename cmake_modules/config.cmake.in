@@ -4,9 +4,4 @@ if(NOT jsoncpp_FOUND)
     find_package(jsoncpp REQUIRED)
 endif()
 
-find_library(NAMES HLSL TARGET dxcompiler REQUIRED)
-if(WIN32)
-    find_library(NAMES HLSL_WIN TARGET d3dcompiler REQUIRED)
-endif()
-
-include("${CMAKE_CURRENT_LIST_DIR}/@HLSL_BUILDER_TARGETS_EXPORT_NAME@.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/@GLSL_BUILDER_TARGETS_EXPORT_NAME@.cmake")
