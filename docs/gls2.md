@@ -6,8 +6,6 @@ GLS2 is the pattern of solution that incorporates a set of GLSL shaders, is insp
   * Vertex and Pixel shader are required
   * Geometry shader is optional
   * If Domain shader is present, hull shader is required
-* `VulkanVersion` : stores the vulkan target version. Example: Vulkan 1.3 specs.
-* `HLSLVersion` : stores the HLSL standard that will be compiled.
 * `GraphicsPipeline->VertexEntry` : stores the vertex shader entryponint
 * `GraphicsPipeline->PixelEntry` : stores the pixel shader entryponint
 
@@ -15,7 +13,6 @@ Obs: The arrow `->` indicates a subproperty.
 
 ## Parameters Rules
 
-* `Version`: follows the pattern `<unsigned>.<unsigned>`
 * `Name`: starts with a letter or `_` and follows a letter, a digit or a `_`
 * `Sources`: must be valid paths
 

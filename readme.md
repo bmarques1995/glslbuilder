@@ -1,8 +1,8 @@
 # GLSL Builder
 
-This is a project that uses a solution to compile a set of HLSL files to cso or spv. Is completely inspired in Visual Studio and its solution schema.
+This is a project that uses a solution to compile a set of GLSL files to its text specific target, to be compiled by opengl. Is a fork of the project [HLSLBuilder](https://github.com/bmarques1995/hlslbuilder.git).
 
-The builder is based in 4 pipelines:
+The builder is based in 2 pipelines:
 
 ## Graphics Pipeline (.gp) (will be the first pipeline implemented)
 
@@ -15,7 +15,3 @@ This is the most common shader pipeline, either GLSL and HLSL, involving the fol
 ## Compute Pipeline (.cp)
 
 This is the pipeline used to compute data on GPU using the graphics API, it only has the compute stage
-
-## Mesh Pipeline
-
-This pipeline intend to replace the Graphics Pipeline, when more flexibility is necessary to the Geometry Stage, more details can be found [here](https://microsoft.github.io/DirectX-Specs/d3d/MeshShader.html). It has 3 stages, mesh, amplification and pixel, and all 3 are mandatories.

@@ -6,6 +6,9 @@
 
 namespace GLSLBuilder
 {
+	/**
+	* This is the root exception, that controls all childs.
+	*/
 	class GLSLB_API GLSLBuilderException : public std::exception
 	{
 	public:
